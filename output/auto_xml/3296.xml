@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<annotation>
+		<folder>auto</folder>
+		<filename>3296.jpg</filename>
+		<path>auto</path>
+		<source>
+			<database>Unknown</database>
+		</source>
+		<size>
+			<width>5328</width>
+			<height>4000</height>
+			<depth>3</depth>
+		</size>
+		<segmented>0</segmented>
+		<object>
+			<name>tortrix</name>
+			<pose>Unspecified</pose>
+			<truncated>0</truncated>
+			<difficult>0</difficult>
+			<bndbox>
+				<xmin>1857</xmin>
+				<ymin>1177</ymin>
+				<xmax>3453</xmax>
+				<ymax>2186</ymax>
+			</bndbox>
+		</object>
+	</annotation>

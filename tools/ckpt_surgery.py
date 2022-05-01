@@ -1,5 +1,4 @@
 import torch
-
 import argparse
 import os
 
@@ -82,12 +81,12 @@ def combine_ckpts(args):
     from the base detector. Only the final layer weights are combined.
     """
     def surgery(param_name, is_weight, tar_size, ckpt, ckpt2=None):
-        if not is_weight and param_name + '.bias' not in ckpt['model']:
+        if not is_weight and param_name + ".bias" not in ckpt["model"]:
             return
-        weight_name = param_name + ('.weight' if is_weight else '.bias')
-        pretrained_weight = ckpt['model'][weight_name]
+        weight_name = param_name + (".weight" if is_weight else ".bias")
+        pretrained_weight = ckpt["model"][weight_name]
         prev_cls = pretrained_weight.size(0)
-        if 'cls_score' in param_name:
+        if "cls_score" in param_name:
             prev_cls -= 1
         if is_weight:
             feat_size = pretrained_weight.size(1)
@@ -97,31 +96,37 @@ def combine_ckpts(args):
         if args.coco or args.lvis:
             for i, c in enumerate(BASE_CLASSES):
                 idx = i if args.coco else c
-                if 'cls_score' in param_name:
-                    new_weight[IDMAP[c]] = pretrained_weight[idx]
+                if "cls_score" in param_name:                    
+                    new_weight[IDMAP[c]] = pretrained_weight[IDMAP[c]]
                 else:
-                    new_weight[IDMAP[c]*4:(IDMAP[c]+1)*4] = \
-                        pretrained_weight[idx*4:(idx+1)*4]
+                    new_weight[
+                        IDMAP[c] * 4 : (IDMAP[c] + 1) * 4
+                    ] = pretrained_weight[IDMAP[c] * 4 : (IDMAP[c] + 1) * 4]
         else:
             new_weight[:prev_cls] = pretrained_weight[:prev_cls]
 
-        ckpt2_weight = ckpt2['model'][weight_name]
+        ckpt2_weight = ckpt2["model"][weight_name]
+        # print((ckpt2_weight))
         if args.coco or args.lvis:
             for i, c in enumerate(NOVEL_CLASSES):
-                if 'cls_score' in param_name:
-                    new_weight[IDMAP[c]] = ckpt2_weight[i]
+                if "cls_score" in param_name:
+                    new_weight[IDMAP[c]] = ckpt2_weight[IDMAP[c]]
+                    # print(ckpt2_weight[IDMAP[c]])
                 else:
-                    new_weight[IDMAP[c]*4:(IDMAP[c]+1)*4] = \
-                        ckpt2_weight[i*4:(i+1)*4]
-            if 'cls_score' in param_name:
+                    new_weight[
+                        IDMAP[c] * 4 : (IDMAP[c] + 1) * 4
+                    ] = ckpt2_weight[IDMAP[c] * 4 : (IDMAP[c] + 1) * 4]
+                
+            if "cls_score" in param_name:
                 new_weight[-1] = pretrained_weight[-1]
         else:
-            if 'cls_score' in param_name:
+            if "cls_score" in param_name:
                 new_weight[prev_cls:-1] = ckpt2_weight[:-1]
                 new_weight[-1] = pretrained_weight[-1]
             else:
                 new_weight[prev_cls:] = ckpt2_weight
-        ckpt['model'][weight_name] = new_weight
+        print(new_weight)
+        ckpt["model"][weight_name] = new_weight
 
     surgery_loop(args, surgery)
 
@@ -185,19 +190,19 @@ if __name__ == '__main__':
     # COCO
     if args.coco:
         # COCO
+        # need change
+
+        #split2
         NOVEL_CLASSES = [
-            1, 2, 3, 4, 5, 6, 7, 9, 16, 17, 18, 19, 20, 21, 44, 62, 63, 64, 67,
-            72,
+            6, 8, 9, 11
         ]
         BASE_CLASSES = [
-            8, 10, 11, 13, 14, 15, 22, 23, 24, 25, 27, 28, 31, 32, 33, 34, 35,
-            36, 37, 38, 39, 40, 41, 42, 43, 46, 47, 48, 49, 50, 51, 52, 53, 54,
-            55, 56, 57, 58, 59, 60, 61, 65, 70, 73, 74, 75, 76, 77, 78, 79, 80,
-            81, 82, 84, 85, 86, 87, 88, 89, 90,
+            1, 2, 3, 4, 5, 7, 10, 12, 13, 14, 15, 16, 17
         ]
         ALL_CLASSES = sorted(BASE_CLASSES + NOVEL_CLASSES)
         IDMAP = {v:i for i, v in enumerate(ALL_CLASSES)}
-        TAR_SIZE = 80
+        print(IDMAP)
+        TAR_SIZE = 17
     elif args.lvis:
         # LVIS
         NOVEL_CLASSES = [

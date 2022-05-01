@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<annotation>
+		<folder>auto</folder>
+		<filename>IMG_0448.jpg</filename>
+		<path>auto</path>
+		<source>
+			<database>Unknown</database>
+		</source>
+		<size>
+			<width>3024</width>
+			<height>4032</height>
+			<depth>3</depth>
+		</size>
+		<segmented>0</segmented>
+		<object>
+			<name>miner</name>
+			<pose>Unspecified</pose>
+			<truncated>0</truncated>
+			<difficult>0</difficult>
+			<bndbox>
+				<xmin>1856</xmin>
+				<ymin>567</ymin>
+				<xmax>2921</xmax>
+				<ymax>2080</ymax>
+			</bndbox>
+		</object>
+	</annotation>
