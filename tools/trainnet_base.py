@@ -8,17 +8,16 @@ from detectron2.utils.visualizer import Visualizer
 from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.data.datasets.coco import load_coco_json
-from detectron2.engine import launch
+from detectron2.engine import launch, DefaultTrainer, default_argument_parser, default_setup
 from detectron2.modeling import GeneralizedRCNNWithTTA
 from detectron2.evaluation import COCOEvaluator, verify_results
-from detectron2.engine import DefaultTrainer, default_argument_parser, default_setup
 
 from fsdet.config import get_cfg, set_global_cfg
 
 
 # Dataset Root
 DATASET_ROOT = "/home/eric/mmdetection/data/VOCdevkit/datasets/set1/comparison/" #need change
-DATASET_ROOT_base = "/home/eric/mmdetection/data/VOCdevkit/datasets/set1/split2/base/" #need change
+DATASET_ROOT_base = "/home/eric/mmdetection/data/VOCdevkit/datasets/set1/split0/base/" #need change
 ANN_ROOT = os.path.join(DATASET_ROOT, 'annotations')
 ANN_ROOT_base = os.path.join(DATASET_ROOT_base, 'annotations')
 
@@ -27,6 +26,14 @@ TEST_PATH = os.path.join(DATASET_ROOT, 'test')
 
 TRAINVALTEST_JSON = os.path.join(ANN_ROOT_base, 'instances_trainvaltest.json')    
 TEST_JSON = os.path.join(ANN_ROOT, 'instances_test.json')      
+
+from json_handler import json_handler
+if(os.path.isdir(TRAINVALTEST_PATH)==False):
+    js = json_handler(
+    jpg_data_root= "/home/eric/mmdetection/data/VOCdevkit/datasets/VOC2007/JPEGImages/",
+    coco_data_root = DATASET_ROOT_base, subset = 'trainvaltest')
+    js.write_jpg_txt()
+    js.get_jpg_from_txt()
 
 def plain_register_dataset():
     DatasetCatalog.register("train_tea", lambda: load_coco_json(TRAINVALTEST_JSON, TRAINVALTEST_PATH, "train_tea"))
@@ -79,7 +86,7 @@ def setup(args):
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 17 # 类别数 #need change
     cfg.SOLVER.IMS_PER_BATCH = 3  # batch_size=2; iters_in_one_epoch = dataset_imgs/batch_size  
     ITERS_IN_ONE_EPOCH = int(3336 / cfg.SOLVER.IMS_PER_BATCH) #need change
-    cfg.SOLVER.MAX_ITER = (ITERS_IN_ONE_EPOCH * 72) - 1 # epochs
+    cfg.SOLVER.MAX_ITER = (ITERS_IN_ONE_EPOCH * 24) - 1 # epochs
     # cfg.SOLVER.BASE_LR = 0.002
     # cfg.SOLVER.MOMENTUM = 0.9
     # cfg.SOLVER.WEIGHT_DECAY = 0.0001
@@ -87,7 +94,7 @@ def setup(args):
     cfg.SOLVER.GAMMA = 0.2
     cfg.SOLVER.STEPS = (ITERS_IN_ONE_EPOCH*5, ITERS_IN_ONE_EPOCH*8, ITERS_IN_ONE_EPOCH*10)
     cfg.TEST.EVAL_PERIOD = 4*ITERS_IN_ONE_EPOCH
-    cfg.OUTPUT_DIR = "/home/eric/few-shot-object-detection/checkpoints/coco/faster_rcnn/set1/split2/base_test/" #need change
+    cfg.OUTPUT_DIR = "/home/eric/few-shot-object-detection/checkpoints/coco/faster_rcnn/set1/split0/base/" #need change
     # cfg.SOLVER.WARMUP_FACTOR = 1.0 / 1000
     # cfg.SOLVER.WARMUP_ITERS = 1000
     # cfg.SOLVER.WARMUP_METHOD = "linear"
@@ -107,6 +114,7 @@ def main(args):
 
     if args.eval_only:
         model = Trainer.build_model(cfg)
+        print(model)
         DetectionCheckpointer(model, save_dir=cfg.OUTPUT_DIR).resume_or_load(
             cfg.MODEL.WEIGHTS, resume=args.resume
         )

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<annotation>
+		<folder>auto</folder>
+		<filename>IMG_9615.JPG</filename>
+		<path>auto</path>
+		<source>
+			<database>Unknown</database>
+		</source>
+		<size>
+			<width>4032</width>
+			<height>3024</height>
+			<depth>3</depth>
+		</size>
+		<segmented>0</segmented>
+		<object>
+			<name>brownblight</name>
+			<pose>Unspecified</pose>
+			<truncated>0</truncated>
+			<difficult>0</difficult>
+			<bndbox>
+				<xmin>1269</xmin>
+				<ymin>2385</ymin>
+				<xmax>2414</xmax>
+				<ymax>2957</ymax>
+			</bndbox>
+		</object>
+	</annotation>

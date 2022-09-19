@@ -10,7 +10,7 @@ import time
 from predictor import VisualizationDemo
 from detectron2.data.detection_utils import read_image
 from detectron2.utils.logger import setup_logger
-from detectron2.config import get_cfg
+from fsdet.config import get_cfg
 
 name2id = { 1:'brownblight', 2:'algal', 3: 'blister', 4: 'sunburn', 5: 'fungi_early', 6: 'roller',
             7: 'moth', 8: 'tortrix', 9: 'flushworm', 10: 'caloptilia', 11: 'mosquito_early', 12: 'mosquito_late',

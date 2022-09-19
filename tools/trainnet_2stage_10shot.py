@@ -16,7 +16,7 @@ from fsdet.config import get_cfg
 from json_handler import json_handler
 dataset_root = "/home/eric/mmdetection/data/VOCdevkit/datasets/"
 set_num = "set1/" #need change
-split_num = "split2/" #need change
+split_num = "split1/" #need change
 # Dataset Root
 DATASET_ROOT = dataset_root + set_num + "comparison"
 DATASET_ROOT_few = dataset_root + set_num +  "balanced10"

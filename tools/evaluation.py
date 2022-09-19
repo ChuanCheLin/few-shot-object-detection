@@ -60,8 +60,9 @@ def setup(args):
     cfg.merge_from_file(args.config_file)   # 从config file 覆盖配置
     cfg.merge_from_list(args.opts)          # 从CLI参数 覆盖配置
     # 更改配置参数
-    cfg.DATASETS.TRAIN = ("train_tea",)
-    cfg.DATASETS.TEST = ("test_tea"),
+    # cfg.DATASETS.TRAIN = ("train_tea",)
+    # cfg.DATASETS.TEST = ("test_tea"),
+    cfg.DATASETS.TEST = ("coco_2017_test"),
 
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 17 # 类别数
     cfg.SOLVER.IMS_PER_BATCH = 3  # batch_size=2; iters_in_one_epoch = dataset_imgs/batch_size  

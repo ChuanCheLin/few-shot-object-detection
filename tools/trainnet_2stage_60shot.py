@@ -16,7 +16,7 @@ from json_handler import json_handler
 
 dataset_root = "/home/eric/mmdetection/data/VOCdevkit/datasets/"
 set_num = "set1/" #need change
-split_num = "split2/" #need change
+split_num = "split0/" #need change
 # Dataset Root
 DATASET_ROOT = dataset_root + set_num + "comparison"
 DATASET_ROOT_few = dataset_root + set_num + "all_60"
@@ -71,7 +71,7 @@ def setup(args):
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 17 # 类别数
     cfg.SOLVER.IMS_PER_BATCH = 3  # batch_size=3; iters_in_one_epoch = dataset_imgs/batch_size  
     ITERS_IN_ONE_EPOCH = int(960 / cfg.SOLVER.IMS_PER_BATCH)
-    cfg.SOLVER.MAX_ITER = (ITERS_IN_ONE_EPOCH *24) - 1 # epochs
+    cfg.SOLVER.MAX_ITER = (ITERS_IN_ONE_EPOCH *48) - 1 # epochs
     # cfg.SOLVER.BASE_LR = 0.002
     # cfg.SOLVER.MOMENTUM = 0.9
     # cfg.SOLVER.WEIGHT_DECAY = 0.0001
@@ -79,8 +79,8 @@ def setup(args):
     cfg.SOLVER.GAMMA = 0.2
     cfg.SOLVER.STEPS = (ITERS_IN_ONE_EPOCH*5, ITERS_IN_ONE_EPOCH*8, ITERS_IN_ONE_EPOCH*10)
     cfg.TEST.EVAL_PERIOD = 6*ITERS_IN_ONE_EPOCH #每三個epoch test 一次
-    cfg.MODEL.WEIGHTS = "checkpoints/coco/faster_rcnn/" + set_num + split_num + "base/remove/model_reset_remove.pth"
-    cfg.OUTPUT_DIR = "checkpoints/coco/faster_rcnn/" + set_num + split_num + "60shot_2stage_test"
+    cfg.MODEL.WEIGHTS = "checkpoints/coco/faster_rcnn/" + set_num + split_num + "60shot_unfreeze_12/remove/model_reset_remove.pth"
+    cfg.OUTPUT_DIR = "checkpoints/coco/faster_rcnn/" + set_num + split_num + "60shot_unfreeze_16" #need change
 
     cfg.freeze()
     default_setup(cfg, args)

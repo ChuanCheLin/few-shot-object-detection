@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<annotation>
+		<folder>auto</folder>
+		<filename>IMG_9688.JPG</filename>
+		<path>auto</path>
+		<source>
+			<database>Unknown</database>
+		</source>
+		<size>
+			<width>3024</width>
+			<height>4032</height>
+			<depth>3</depth>
+		</size>
+		<segmented>0</segmented>
+		<object>
+			<name>formosa</name>
+			<pose>Unspecified</pose>
+			<truncated>0</truncated>
+			<difficult>0</difficult>
+			<bndbox>
+				<xmin>1357</xmin>
+				<ymin>1825</ymin>
+				<xmax>2061</xmax>
+				<ymax>2117</ymax>
+			</bndbox>
+		</object>
+	</annotation>
